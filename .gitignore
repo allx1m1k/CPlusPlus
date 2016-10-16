@@ -7,3 +7,13 @@
 /Zadacha1Var6/Zadacha1Var6/Debug
 /Zadacha1Var6/Zadacha1Var6.VC.VC.opendb
 /Zadacha1Var6/Zadacha1Var6.VC.db
+*.suo
+/Zadacha2Var6/Debug
+/Zadacha1Var6/Zadacha2Var6
+*.tlog
+*.obj
+*.log
+/Zadacha2Var6/Zadacha2Var6.VC.db
+*.idb
+*.pdb
+*.opendb
