@@ -19,3 +19,6 @@
 *.opendb
 /Zadacha1Var6/x64/Debug
 /List/Debug
+*.db
+*.exe
+*.ilk
