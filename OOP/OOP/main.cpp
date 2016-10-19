@@ -1,7 +1,9 @@
 #include "oop.h"
 #include <vector>
 #include <string>
-#include <initializer_list>
+//
+//http://stackoverflow.com/questions/5333374/why-am-i-getting-these-already-defined-linker-errors
+//
 
 using namespace std;
 

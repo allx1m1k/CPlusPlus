@@ -44,11 +44,7 @@ Parent::Parent(std::string name, int age)
 	, mChildren(0)
 {}
 
-//Parent instance method
-void addChildren(std::vector<std::string> children)
-{
 
-}
 
 //Child is ancestor of Parent 
 class Child : public Parent
