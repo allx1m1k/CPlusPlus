@@ -4,6 +4,8 @@
 #include <string>
 #include <initializer_list>
 
+class Child; //forward declaration
+
 class Parent
 { //
 public:
@@ -15,13 +17,14 @@ public:
 	void drink();
 	bool hasChildren; //number of Children
 	void addChildren(std::vector<std::string> children);
-	const std::vector<std::string> mChildren; 
-	//const std::vector<Child> mChildren; //NOK Parent's children, this is vector of refs of Child types
+	
+	//std::vector<Child> mChildren; //NOK Parent's children, this is vector of refs of Child types
 	//void addChildren(Child& children);
 
 protected:
 	std::string mParentName; //Parent name
 	uint16_t mAge; //Parent age
+	std::vector<std::string> mChildren; //Children of Parent
 
 }; //end of Parent
 
