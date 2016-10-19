@@ -22,3 +22,6 @@
 *.db
 *.exe
 *.ilk
+*.sln
+*.vcxproj
+*.vcxproj.filters
