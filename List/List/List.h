@@ -16,9 +16,9 @@ public:
 		Node* next;  //указатель на следующий элемент
 
 		Node() : //конструктор
-			mData(0),
-			prior(0),
-			next()
+			mData(nullptr),
+			prior(nullptr),
+			next(nullptr)
 		{}
 	};
 
@@ -27,7 +27,7 @@ public:
 	Node* prevNode();
 	Node* insertNode(T data);
 	Node* insertAfterNode(Node* n, T data);  //вставить новый нод data, после нода n
-	Node* insertToEnd(T* data); //pushback	
+	Node* insertToEnd(T data); //pushback	
 								//Node* getNewNode(const T&); 
 	int size();
 	void clear();
@@ -47,8 +47,8 @@ private: //стуктура Списка
 template<class T> //параметризированный конструктор
 List<T>::List()
 	:count(0)
-	, head(0)
-	, tail(0)
+	, head(nullptr)
+	, tail(nullptr)
 {
 }
 
@@ -111,11 +111,10 @@ typename List<T>::Node* List<T>::insertNode(T data)
 }
 
 template<class T>
-typename List<T>::Node* List<T>::insertToEnd(T* data)
+typename List<T>::Node* List<T>::insertToEnd(T data)
 { //pushback
-	List<T>::Node* nNode = new Node; //выделим место в памяти
-	nNode->mData = data; //в указатель на внутренний атрибут поместим адрес формального аргумента
-	count++; //увеличим счетчик
+	List<T>::Node* nNode = new Node; //выделим место в памяти, установим указатель на первую ячейку
+	nNode->mData = &data; //в указатель на внутренний атрибут запишем адрес формального аргумента
 	if (count == 0) //если список пуст
 	{
 		head = nNode; //начало Lista указывает на вновь созданны	 Node
@@ -124,17 +123,35 @@ typename List<T>::Node* List<T>::insertToEnd(T* data)
 					  //data->prior = 0;
 	}
 	else //если список не пуст: 
+	{ 
 		 //1. в новый Node указатель на предыдущий Node prior установим равным хвосту (tail)
 		 //1.1.  в новый Node указатель на следующий Node next установим равным 0
 		 //2. в хвостовом Node Lista перекинем указатель next на новый Node
 		 //3. перекинем конец Listа tail на новый Node		
 		nNode->prior = tail; //п.1
-	nNode->next = 0; //п.1.1
-	tail->next = nNode;//п.2
-	tail = nNode; //п.3
-
+		nNode->next = 0; //п.1.1
+		tail->next = nNode;//п.2
+		tail = nNode; //п.3
+	}
+	count++; //увеличим счетчик
 	return nNode;
 } //end pushback
+
+//print
+template<class T>
+void List<T>::print()
+{
+
+	Node* i = head; //получим указатель на первую ноду
+	while (i != 0) //пока указатель содержит хоть какой-то адрес
+	{
+		//Node* tmp = i; //сохраним текущий адрес во временную переменную
+		std::cout << "Current node is: " << *i->mData << " Previous node is:" << *i->prior->mData << std::endl;
+		i = i->next;
+	}
+
+
+}
 
 
   /*
