@@ -10,18 +10,14 @@ int main()
 	//List<int>* a = new List<int> ;
 	List<int> a;
 	cout << a.size() << endl;
-	a.insertToEnd(1);
 	a.insertToEnd(-1);
+	a.insertToEnd(11);
+	a.insertToEnd(100);
 	a.insertToEnd(0);
+	a.insertToEnd(1);
 
-/*
-	a.insertNode(3);
-	a.insertNode(2);
-	a.insertNode(-1);
-	a.insertNode(0);
-*/
 	cout << a.size() << endl;
-	//a.print(); //распечатаем List
+	a.print(); //распечатаем List
 	
 
 	a.clear();

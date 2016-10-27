@@ -11,12 +11,12 @@ public:
 	struct Node // Структурный тип для элемента списка
 	{
 
-		T* mData;  //данные, хранящиеся в узле
+		T mData;  //типизированные (шаблонные) данные, хранящиеся в узле
 		Node* prior; //указатель на предыдущий элемент
 		Node* next;  //указатель на следующий элемент
 
 		Node() : //конструктор
-			mData(nullptr),
+			mData(0),
 			prior(nullptr),
 			next(nullptr)
 		{}
@@ -101,11 +101,10 @@ template<class T>
 typename List<T>::Node* List<T>::insertNode(T data)
 {
 	List<T>::Node* nNode = new Node; //выделем место в памяти
-	nNode->mData = &data; //в указатель на внутренний атрибут запишем адрес
-	count++; //увеличим счетчик
-
+	nNode->mData = data; //из-под указателя, во внутренний атрибут запишем значение формального аргумента
 	head = nNode;
 	tail = nNode;
+	count++; //увеличим счетчик
 
 	return nNode;
 }
@@ -114,7 +113,7 @@ template<class T>
 typename List<T>::Node* List<T>::insertToEnd(T data)
 { //pushback
 	List<T>::Node* nNode = new Node; //выделим место в памяти, установим указатель на первую ячейку
-	nNode->mData = &data; //в указатель на внутренний атрибут запишем адрес формального аргумента
+	nNode->mData = data; //из-под указателя, во внутренний атрибут запишем значение формального аргумента
 	if (count == 0) //если список пуст
 	{
 		head = nNode; //начало Lista указывает на вновь созданны	 Node
@@ -133,6 +132,7 @@ typename List<T>::Node* List<T>::insertToEnd(T data)
 		tail->next = nNode;//п.2
 		tail = nNode; //п.3
 	}
+	cout << "adding " << data << endl;
 	count++; //увеличим счетчик
 	return nNode;
 } //end pushback
@@ -143,10 +143,10 @@ void List<T>::print()
 {
 
 	Node* i = head; //получим указатель на первую ноду
-	while (i != 0) //пока указатель содержит хоть какой-то адрес
+	while (i->next != nullptr) //пока Node содержит указатель на next Node
 	{
 		//Node* tmp = i; //сохраним текущий адрес во временную переменную
-		std::cout << "Current node is: " << *i->mData << " Previous node is:" << *i->prior->mData << std::endl;
+		std::cout << "Current node is: " << i->mData << " Next node is:" << i->next->mData << std::endl;
 		i = i->next;
 	}
 
