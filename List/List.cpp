@@ -22,5 +22,6 @@ int main()
 
 	a.clear();
 	cout << a.size() << endl;
+	a.print(); //распечатаем List
 	int sleep; cin >> sleep;
 }

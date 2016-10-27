@@ -142,15 +142,17 @@ template<class T>
 void List<T>::print()
 {
 
-	Node* i = head; //получим указатель на первую ноду
-	while (i->next != nullptr) //пока Node содержит указатель на next Node
+	if (size() > 0) //выведем Node на экран только если List не пустой
 	{
-		//Node* tmp = i; //сохраним текущий адрес во временную переменную
-		std::cout << "Current node is: " << i->mData << " Next node is:" << i->next->mData << std::endl;
-		i = i->next;
-	}
-
-
+		Node* i = head; //получим указатель на первую ноду
+		while (i->next != nullptr) //пока Node содержит указатель на next Node
+		{
+			//Node* tmp = i; //сохраним текущий адрес во временную переменную
+			std::cout << "Current node is: " << i->mData << " Next node is:" << i->next->mData << std::endl;
+			i = i->next;
+		}
+	} else 
+		cout << "The List is empty \n";
 }
 
 
