@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+class MyClass {
+public:
+	int x;
+	char c;
+	//MyClass();
+	//MyClass(int aLen, char aChar); //стандартный конструктор
+	//MyClass(MyClass & other); //конструктор копирования и изменения
+	void display(MyClass *aObj);
+
+//стандартный конструктор по умолчанию
+	MyClass() :
+		//инициализируем значения;
+		x(0), c(' ')
+	{}
+
+//стандартный конструктор c параметрами
+	MyClass(int aLen, char aChar) :
+		//инициализируем значения;
+		x(aLen), c(aChar)
+	{}
+
+//конструктор копирования с изменением полей объекта
+	MyClass(MyClass &other) :
+		x((other.x) + 1), c((other.c) + 1)
+	{}
+
+
+};
+
+void display(MyClass *aObj) {
+	std::cout << "MyClass int is: " << aObj->x << std::endl;
+	std::cout << "MyClass char is: " << aObj->c << std::endl;
+}
+
+
+int main() {
+
+	MyClass a = MyClass();
+	display(&a);
+
+	MyClass b = MyClass(1000, 'B');
+	display(&b);
+
+	MyClass c = MyClass(b);
+	display(&c);
+	display(&b);
+}
