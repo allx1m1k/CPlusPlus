@@ -1,4 +1,8 @@
-#include <iostream>
+#include <iostream> 
+#include <locale>
+#include <cstring>
+
+
 
 using namespace std;
 
@@ -8,7 +12,7 @@ public:
 	char c;
 	//MyClass();
 	//MyClass(int aLen, char aChar); //стандартный конструктор
-	//MyClass(MyClass & other); //конструктор копирования и изменения
+	//MyClass(const MyClass & other); //конструктор копирования и изменения
 	void display(MyClass *aObj);
 
 //стандартный конструктор по умолчанию
@@ -24,9 +28,11 @@ public:
 	{}
 
 //конструктор копирования с изменением полей объекта
-	MyClass(MyClass &other) :
+	MyClass(const MyClass &other) :
 		x((other.x) + 1), c((other.c) + 1)
-	{}
+	{
+		std::cout << "Creating the copy and changing the attributes" << std::endl;
+	}
 
 
 };
