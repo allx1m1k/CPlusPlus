@@ -100,7 +100,7 @@ bool List<T>::isEmpty()
 template<class T>
 typename List<T>::Node* List<T>::insertNode(T data)
 {
-	List<T>::Node* nNode = new Node; //выделем место в памяти
+	List<T>::Node* nNode = new Node; //выделм место в памяти
 	nNode->mData = data; //из-под указателя, во внутренний атрибут запишем значение формального аргумента
 	head = nNode;
 	tail = nNode;
