@@ -7,7 +7,6 @@ using namespace std;
 
 int main()
 {
-	//List<int>* a = new List<int> ;
 	List<int> a;
 	cout << a.size() << endl;
 	a.insertToEnd(-1);

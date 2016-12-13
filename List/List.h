@@ -6,7 +6,7 @@ template<class T> class List
 public:
 	List();  //конструктор List п.у.
 	List(int number);  //конструктор List с указанным кол-ом Nodes
-	~List(); //деконструктор List п.у.
+	~List(); //деструктор List п.у.
 
 	struct Node // —труктурный тип дл€ элемента списка
 	{
@@ -23,18 +23,14 @@ public:
 	};
 
 	//описание API интерфейса к списку
-	Node* nextNode();
-	Node* prevNode();
 	Node* insertNode(T data);
 	Node* insertAfterNode(Node* n, T data);  //вставить новый нод data, после нода n
 	Node* insertToEnd(T data); //pushback	
-								//Node* getNewNode(const T&); 
+	
 	int size();
 	void clear();
-	void sort();
 	void print();
 	bool isEmpty();
-
 
 private: //стуктура —писка
 	int count; //кол-во элементов
@@ -70,6 +66,7 @@ List<T>::~List()
 template<class T>
 int List<T>::size()
 {
+	std::cout << "Fetching List size" << std::endl;
 	return count;
 }
 
@@ -154,16 +151,6 @@ void List<T>::print()
 	} else 
 		cout << "The List is empty \n";
 }
-
-
-  /*
-  template<class T>
-  List<T>::getNewNode(Node node)
-  {
-  return Node* node;
-  }
-  */
-
 
 
 
