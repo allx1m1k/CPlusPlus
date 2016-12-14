@@ -45,17 +45,14 @@ List<T>::List()
 	:count(0)
 	, head(nullptr)
 	, tail(nullptr)
-{
-}
+{}
 
 template<class T> //перегрузка конструктора
 List<T>::List(int numberOfNodes)
 	:count(numberOfNodes)
 	, head(0)
 	, tail(0)
-{
-	(count = numberOfNodes);
-}
+{}
 
 template<class T> //параметризированный деструктор
 List<T>::~List()
