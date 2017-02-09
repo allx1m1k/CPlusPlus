@@ -19,13 +19,17 @@ public:
 	MyClass() :
 		//инициализируем значения;
 		x(0), c(' ')
-	{}
+	{
+		std::cout << "Creating instance with empty attributes" << std::endl;
+	}
 
 //стандартный конструктор c параметрами
 	MyClass(int aLen, char aChar) :
 		//инициализируем значения;
 		x(aLen), c(aChar)
-	{}
+	{
+		std::cout << "Creating instance with predefined attributes" << std::endl;
+	}
 
 //конструктор копирования с изменением полей объекта
 	MyClass(const MyClass &other) :
