@@ -26,3 +26,6 @@
 *.vcxproj
 *.vcxproj.filters
 *.user
+/CarStat/Debug/car.~xt
+/CarStat/Debug/wwwcar.txt
+/CarStat/Debug/ddcar.txt
