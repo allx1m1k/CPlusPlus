@@ -18,6 +18,12 @@
 //. вычитка структуры из файла http://ci-plus-plus-snachala.ru/?p=2177
 //.по-сточная вычитка из файла по условию (год выпуска <= заданный год)
 //см. тут http://www.cplusplus.com/forum/beginner/208388/#msg982326
+//.msdn по-строчная вычитка файла
+//https://msdn.microsoft.com/uk-ua/library/94223t4d.aspx
+//.string substr
+//http://www.cplusplus.com/reference/string/string/substr/
+//.sort
+//http://www.cplusplus.com/reference/algorithm/sort/
 //. вычитка в буфер http://www.programmersforum.ru/showthread.php?t=91445
 //запись считанной строки в несортированную динамическую структуру-контейнер
 //см. stl контейнеры http://informatics.mccme.ru/mod/book/view.php?id=492&chapterid=200

@@ -1,15 +1,22 @@
 #include <fstream>
-#include <windows.h>
+#include <algorithm>    // std::sort
+#include <vector>       // std::vector
 #include <stdexcept>
 #include "carstat.h"
 using namespace std;
+//
+fstream fileIn; //input file
+Car aCar;
+std::string aStr; //a file line which has car data
+std::vector<std::string> aCars; //a array of car data
+//std::vector<string> aCars;
+int i = 0;
 
 int main() 
 {
 	
 	try
 	{
-		fstream fileIn; //input file
 		//void open(const char *filename, ios::openmode mode);
 		fileIn.open("car.txt", ios::in);
 		if (!fileIn) {
@@ -18,6 +25,13 @@ int main()
 		}
 		else {
 			cout << "car.txt found" << endl;
+			while (getline(fileIn, aStr))
+			{
+				aCars.push_back(aStr);
+				//cout << aStr << endl;
+				cout << aCars[i] << endl;
+				i++;
+			}
 		}
 		
 	}
@@ -26,6 +40,18 @@ int main()
 		cerr << e.what() << endl;
 		return -1;
 	}
+	
+	std::sort(aCars.begin(), aCars.end());
+
+	int k = 0;
+	while (k < aCars.size())
+	{
+		std::string aYear = aCars[k].substr(0, 4);
+		//cout << aCars[k] << endl;
+		cout <<  aYear << endl;
+		k++;
+	}
+
 	//Ok.
 	return 0;
 }
