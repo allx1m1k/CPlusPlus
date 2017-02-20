@@ -32,7 +32,15 @@
 
 struct Car
 {
-	std::string brandName; //бренд
-	float price; //цена
+ private:
 	uint16_t year; //год выпуска
+	float price; //цена
+	std::string name; //бренд
+	
+	Car(): //конструктор
+		year(0),
+		price(0.00),
+		name("")
+	{}
+
 };
