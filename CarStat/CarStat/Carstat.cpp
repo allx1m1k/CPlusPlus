@@ -9,6 +9,7 @@ fstream fileIn; //input file
 Car aCar;
 std::string aStr; //a file line which has car data
 std::vector<std::string> aCars; //a array of car data
+std::vector<Car> aStructCars; //a array of car data via Car struct
 //std::vector<string> aCars;
 int i = 0;
 
@@ -27,7 +28,10 @@ int main()
 			cout << "car.txt found" << endl;
 			while (getline(fileIn, aStr))
 			{
-				aCars.push_back(aStr);
+				aCars.push_back(aStr); //store a data in vector of strings
+				//aStructCars.push_back(aStr);
+				string &ref = aStr;
+				aStructCars[i] = Car(ref);
 				//cout << aStr << endl;
 				cout << aCars[i] << endl;
 				i++;

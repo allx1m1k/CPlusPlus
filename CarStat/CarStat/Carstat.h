@@ -4,6 +4,8 @@
 #include <string>
 #include <initializer_list>
 #include <iostream>
+#include <sstream>
+
 
 /*
 Имеется файл, в каждой строке которого хранится запись о проданном авто.
@@ -32,15 +34,32 @@
 
 struct Car
 {
- private:
-	uint16_t year; //год выпуска
-	float price; //цена
+	int year; //год выпуска
+	float_t price; //цена
 	std::string name; //бренд
+
+	~Car() {}
 	
-	Car(): //конструктор
+	//конструктор без параметров
+	Car(): 
 		year(0),
 		price(0.00),
 		name("")
 	{}
+	
+	//конструктор из строки, считанной из файла
+	//http://stackoverflow.com/questions/27098305/parsing-string-into-struct-variables
+	//http://www.cplusplus.com/reference/sstream/istringstream/
+	Car(std::string &str)
+	{
+		//parse year
+		std::string *strYear = new std::string; //allocate mem for year in str
+		std::size_t loc = str.find(';'); //delimiter
+		*strYear = str.substr(0, loc);  //assign new value of year
+		year = atoi(strYear->c_str()); //from str to int year
+		//parse price and name
+		std::istringstream iss(str.substr(loc));
+		//iss >> price >> name;
+	}
 
 };
