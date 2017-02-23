@@ -38,7 +38,7 @@ int main()
 				aYear = aStr.substr(0, 4); //store year from file line
 				if (std::stoi(aYear) >= askYear) //comparing stored year with defined
 					{ 	aCars.push_back(aStr);	//store line in vector if it's match
-						cout << aCars[i] << endl; //display which car is added to vector
+						//cout << aCars[i] << endl; //display which car is added to vector
 					}				
 				i++;				
 			}
