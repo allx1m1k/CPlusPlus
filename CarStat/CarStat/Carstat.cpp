@@ -2,16 +2,21 @@
 #include <algorithm>    // std::sort
 #include <vector>       // std::vector
 #include <stdexcept>
-#include "carstat.h"
+#include <string>
+#include <initializer_list>
+#include <iostream>
+#include <sstream>
+#include <stdlib.h> 
 using namespace std;
 //
 fstream fileIn; //input file
-Car aCar;
 std::string aStr; //a file line which has car data
-std::vector<std::string> aCars; //a array of car data
-std::vector<Car> aStructCars; //a array of car data via Car struct
+std::vector<std::string> aCars = {""}; //a array of car data
+std::string aYear = "";
+//std::vector<Car> aStructCars; //a array of car data via Car struct
 //std::vector<string> aCars;
 int i = 0;
+int askYear = 0;
 
 int main() 
 {
@@ -26,15 +31,16 @@ int main()
 		}
 		else {
 			cout << "car.txt found" << endl;
+			cout << "Enter year: ";
+			cin  >> askYear;
 			while (getline(fileIn, aStr))
 			{
-				aCars.push_back(aStr); //store a data in vector of strings
-				//aStructCars.push_back(aStr);
-				string &ref = aStr;
-				aStructCars[i] = Car(ref);
-				//cout << aStr << endl;
-				cout << aCars[i] << endl;
-				i++;
+				aYear = aStr.substr(0, 4); //store year from file line
+				if (std::stoi(aYear) >= askYear) //comparing stored year with defined
+					{ 	aCars.push_back(aStr);	//store line in vector if it's match
+						cout << aCars[i] << endl; //display which car is added to vector
+					}				
+				i++;				
 			}
 		}
 		
@@ -46,13 +52,13 @@ int main()
 	}
 	
 	std::sort(aCars.begin(), aCars.end());
-
-	int k = 0;
+	
+	unsigned int k = 0;
 	while (k < aCars.size())
 	{
-		std::string aYear = aCars[k].substr(0, 4);
+		std::string aaYear = aCars[k].substr(0, 4);
 		//cout << aCars[k] << endl;
-		cout <<  aYear << endl;
+		cout <<  aaYear << endl;
 		k++;
 	}
 
