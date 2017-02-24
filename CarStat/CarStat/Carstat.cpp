@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdlib.h> 
+#include "Carstat.h"
 using namespace std;
 //
 fstream fileIn; //input file
@@ -20,7 +21,7 @@ int askYear = 0;
 
 int main() 
 {
-	
+	std::vector<string> *myDelim = new std::vector<string>; //alocate mem in heap
 	try
 	{
 		//void open(const char *filename, ios::openmode mode);
@@ -33,32 +34,29 @@ int main()
 			cout << "car.txt found" << endl;
 			cout << "Enter year: ";
 			cin  >> askYear;
-			while (getline(fileIn, aStr))
-			{
-				aYear = aStr.substr(0, 4); //store year from file line
-				if (std::stoi(aYear) >= askYear) //comparing stored year with defined
-					{ 	aCars.push_back(aStr);	//store line in vector if it's match
-						//cout << aCars[i] << endl; //display which car is added to vector
-					}				
-				i++;				
+			//std::vector<string> myDelim = {};
+			
+			while (getline(fileIn, aStr)) //read a line from file
+				//mySplitToCharToken(aStr, ';');
+				mySplitToStrVector(aStr, ';', myDelim); //parse a line to vector
 			}
-		}
-		
+		cout << "Size of vector tokens is: " << myDelim->size() << endl;
+
 	}
 	catch (std::exception& e)
 	{
 		cerr << e.what() << endl;
 		return -1;
 	}
-	
-	std::sort(aCars.begin(), aCars.end());
-	
-	unsigned int k = 0;
-	while (k < aCars.size())
+	/*
+	Displaying tokens
+	*/
+	int k = 0;
+	while (k < myDelim->size())
 	{
-		std::string aaYear = aCars[k].substr(0, 4);
-		//cout << aCars[k] << endl;
-		cout <<  aaYear << endl;
+		//std::string aaYear = aCars[k].substr(0, 4);
+		cout << myDelim->at(k) << endl;
+		//cout <<  aaYear << endl;
 		k++;
 	}
 

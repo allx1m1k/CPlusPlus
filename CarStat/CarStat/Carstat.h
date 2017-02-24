@@ -5,7 +5,9 @@
 #include <initializer_list>
 #include <iostream>
 #include <sstream>
-
+#include <iostream>
+#include <stdlib.h> 
+using namespace std;
 
 /*
 Имеется файл, в каждой строке которого хранится запись о проданном авто.
@@ -64,4 +66,36 @@ struct Car
 
 };
 
-int main();
+/* 
+Split a string by a delim, and return a vector of strings 
+containing no delim
+*/
+std::vector<string> mySplitToCharToken(const string &s, char delim) 
+	{
+		stringstream ss(s);
+		string item;
+		vector<string> tokens;
+		while (getline(ss, item, delim)) 
+		{
+			tokens.push_back(item);
+		}
+		return tokens;
+	}
+/*
+string& s - input 
+delim - delimeter
+vector<string>* v - output
+http://ysonggit.github.io/coding/2014/12/16/split-a-string-using-c.html
+*/
+void mySplitToStrVector(const string& s, char delim, vector<string>* v) {
+	auto i = 0;
+	auto pos = s.find(delim);
+	while (pos != string::npos) {
+		v->push_back(s.substr(i, pos - i));
+		i = ++pos;
+		pos = s.find(delim, pos);
+
+		if (pos == string::npos)
+			v->push_back(s.substr(i, s.length()));
+	}
+}
