@@ -30,18 +30,20 @@ int main()
 			//throw invalid_argument("File not found!");
 			throw std::runtime_error("File not found!");
 		}
-		else {
+		else 
+		{
 			cout << "car.txt found" << endl;
 			cout << "Enter year: ";
 			cin  >> askYear;
-			//std::vector<string> myDelim = {};
-			
+			//std::vector<string> myDelim = {};		
 			while (getline(fileIn, aStr)) //read a line from file
-				//mySplitToCharToken(aStr, ';');
-				mySplitToStrVector(aStr, ';', myDelim); //parse a line to vector
+			{
+				 //mySplitToCharToken(aStr, ';');
+				aYear = aStr.substr(0, 4); //extract year from file line
+				if (std::stoi(aYear) >= askYear) //add only line which is fulfill	
+					mySplitToStrVector(aStr, ';', myDelim); //parse a line to vector
 			}
-		cout << "Size of vector tokens is: " << myDelim->size() << endl;
-
+		}
 	}
 	catch (std::exception& e)
 	{

@@ -87,7 +87,7 @@ delim - delimeter
 vector<string>* v - output
 http://ysonggit.github.io/coding/2014/12/16/split-a-string-using-c.html
 */
-void mySplitToStrVector(const string& s, char delim, vector<string>* v) {
+void mySplitToStrVector(const string s, char delim, vector<string>* v) {
 	auto i = 0;
 	auto pos = s.find(delim);
 	while (pos != string::npos) {
