@@ -40,6 +40,7 @@ struct Car
 	float_t price; //цена
 	std::string name; //бренд
 
+	//destructor
 	~Car() {}
 	
 	//конструктор без параметров
@@ -79,7 +80,7 @@ struct Car
 	Car(int inYear, float_t inPrize, string inName):
 		year(inYear), price(inPrize), name(inName)
 	{	
-		cout << "creating a new Car" << endl;
+		cout << "creating a new Car: " << year << " " << price << " " << name << endl;
 	}
 
 };
