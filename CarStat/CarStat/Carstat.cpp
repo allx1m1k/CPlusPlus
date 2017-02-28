@@ -21,6 +21,7 @@ int askYear = 0;
 
 int main() 
 {
+	
 	std::vector<string> *myDelim = new std::vector<string>; //alocate mem in heap
 	try
 	{
@@ -54,14 +55,32 @@ int main()
 	Displaying tokens
 	*/
 	int k = 0;
+	cout << endl << "Displaying tokens from myDelim vector" << endl;
 	while (k < myDelim->size())
 	{
 		//std::string aaYear = aCars[k].substr(0, 4);
-		cout << myDelim->at(k) << endl;
+		cout << myDelim->at(k);
 		//cout <<  aaYear << endl;
 		k++;
+		cout << endl;
+	}
+	//populating the vector of Cars structure
+	std::vector<Car> *carList = new vector<Car>;
+	int j = 0;
+	while (j < myDelim->size())
+	{
+		//carList->at(j) = Car(myDelim);
+		carList->push_back(Car(myDelim));
+		j++;
 	}
 
+	cout << carList->size();
+	
+	//printCarList(carList);
+
+	//single car works Ok
+	//Car *singleCar = new Car(myDelim);
+	
 	//Ok.
 	return 0;
 }

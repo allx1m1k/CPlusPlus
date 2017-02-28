@@ -64,6 +64,17 @@ struct Car
 		//iss >> price >> name;
 	}
 
+	//constructor from vektor
+	Car(vector<string> *v)
+	{
+		for (int k = 0; k < (v->size() - 2); k++)
+		{
+			year = atoi(v->at(k).c_str()); //populating year
+			price = atoi(v->at(k + 1).c_str()); //populating prise
+			name = v->at(k + 2);  //populating brand name
+		}
+	}
+
 };
 
 /* 
@@ -98,4 +109,15 @@ void mySplitToStrVector(const string s, char delim, vector<string>* v) {
 		if (pos == string::npos)
 			v->push_back(s.substr(i, s.length()));
 	}
+}
+
+void printCarList(vector<Car>* s) {
+	cout << endl << "Displaying Cars from car list" << endl;
+	for (int k = 0; k < s->size(); k++)
+	{
+		//cout << s->at(k) << endl;
+		//price = atoi(s->at(k + 1).c_str()); //populating prise
+		//name = v->at(s + 2);  //populating brand name
+	}
+
 }
