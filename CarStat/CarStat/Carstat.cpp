@@ -66,15 +66,34 @@ int main()
 	}
 	//populating the vector of Cars structure
 	std::vector<Car> *carList = new vector<Car>;
+	cout << endl << myDelim->size() << " tokens found";
+	bool flag = false; //if flag is set then create the Car instance
+	
+	for (int i = 0; i <= myDelim->size() - 3; i = i + 3) //looping by year 
+		{
+			for (int kk = 1; kk <= myDelim->size() - 2; kk = kk + 3) //looping by price 
+			{
+				for (int j = 2; j <= myDelim->size() - 1; j = j + 3) //looping by name
+				{					
+					int inYear = atoi(myDelim->at(i).c_str()); //populating year
+					float_t inPrice = atoi(myDelim->at(kk).c_str()); //populating prise
+					std::string inName = myDelim->at(j);  //populating brand name					
+					carList->push_back(Car(inYear, inPrice, inName)); //passing values to constructor	
+				}		
+				//break;
+			}
+			//break;
+		}
+/*	
 	int j = 0;
 	while (j < myDelim->size())
 	{
 		//carList->at(j) = Car(myDelim);
 		carList->push_back(Car(myDelim));
 		j++;
-	}
-
-	cout << carList->size();
+	} 
+*/
+	cout << endl << "carList size is: " << carList->size() << endl;
 	
 	//printCarList(carList);
 

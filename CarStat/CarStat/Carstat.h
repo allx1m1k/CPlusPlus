@@ -75,6 +75,13 @@ struct Car
 		}
 	}
 
+	//constructor from passed values
+	Car(int inYear, float_t inPrize, string inName):
+		year(inYear), price(inPrize), name(inName)
+	{	
+		cout << "creating a new Car" << endl;
+	}
+
 };
 
 /* 
