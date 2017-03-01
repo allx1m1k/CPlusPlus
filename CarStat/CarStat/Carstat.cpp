@@ -64,29 +64,29 @@ int main()
 		k++;
 		cout << endl;
 	}
-	//populating the vector of Cars structure
+	//populating the vector of Cars 
 	std::vector<Car> *carList = new vector<Car>;
 	cout << endl << myDelim->size() << " tokens found" << endl;
 	bool flag = true; //if flag is set then create the Car instance
-	int i = 0; //index of year
-	int kk = 1; //index of price
-	int j = 2; //index of name 
-	//adding Car to the vector
+	int indexYear = 0; //index of year
+	int indexPrice = 1; //index of price
+	int indexName = 2; //index of name 
+	//adding Car instance to the vector
 	if (myDelim->size() > 0) {
-		for (i; i <= myDelim->size() - 3; i = i + 3) //looping by year 
+		for (indexYear; indexYear <= myDelim->size() - 3; indexYear = indexYear + 3) //looping by year 
 		{
 			flag = true;
 			if (flag) {
-				for (kk; kk <= myDelim->size() - 2; kk = kk + 3) //looping by price 
+				for (indexPrice; indexPrice <= myDelim->size() - 2; indexPrice = indexPrice + 3) //looping by price 
 				{
 					if (flag) {
-						for (j; j <= myDelim->size() - 1; j = j + 3) //looping by name
+						for (indexName; indexName <= myDelim->size() - 1; indexName = indexName + 3) //looping by name
 						{
 							if (flag) {
-								int inYear = atoi(myDelim->at(i).c_str()); //populating year
-								float_t inPrice = atoi(myDelim->at(kk).c_str()); //populating prise
-								std::string inName = myDelim->at(j);  //populating brand name					
-								carList->push_back(Car(inYear, inPrice, inName)); //passing values to constructor	
+								int inYear = atoi(myDelim->at(indexYear).c_str()); //populating year
+								float_t inPrice = atoi(myDelim->at(indexPrice).c_str()); //populating prise
+								std::string inName = myDelim->at(indexName);  //populating brand name					
+								carList->push_back(Car(inYear, inPrice, inName)); //passing values to Car constructor	
 							}
 							else break;
 							flag = false;
@@ -97,7 +97,6 @@ int main()
 				}
 			}
 			else break;
-			//flag = true;
 		}
 	}
 	cout << endl << "carList size is: " << carList->size() << endl;
