@@ -36,9 +36,11 @@ using namespace std;
 
 struct Car
 {
+
 	int year; //год выпуска
 	float_t price; //цена
 	std::string name; //бренд
+
 
 	//destructor
 	~Car() {}
@@ -83,7 +85,18 @@ struct Car
 		cout << "creating a new Car: " << year << " " << price << " " << name << endl;
 	}
 
+	//overload comaparing operator more than...
+	void operator>(Car rhsCar);
+
 };
+//implementation of overload operator 
+void Car::operator>(Car rhsCar)
+{
+	if (price > rhsCar.price)
+		cout << "Price: " << price << " more than " << rhsCar.price;
+	else
+		cout << rhsCar.price << " is more!";
+}
 
 /* 
 Split a string by a delim, and return a vector of strings 
@@ -127,5 +140,6 @@ void printCarList(vector<Car>* s) {
 		//price = atoi(s->at(k + 1).c_str()); //populating prise
 		//name = v->at(s + 2);  //populating brand name
 	}
+
 
 }

@@ -100,9 +100,12 @@ int main()
 		}
 	}
 	cout << endl << "carList size is: " << carList->size() << endl;
+	//compare two Cars from carList
+	carList->at(0) > carList->at(1);
 	//call the destructor to free memory
 	carList->clear();
 	//Ok.
 	return 0;
 }
+
 
