@@ -132,6 +132,30 @@ void mySplitToStrVector(const string s, char delim, vector<string>* v) {
 	}
 }
 
+/* Evaluating max price in carList
+*/
+void getCarWithMaxPrice(vector<Car> *carList)
+{
+	float_t maxPrice = 0;
+	float_t temp = 0;
+	int carIndex = 0;
+	int maxIndex = 0;
+
+	while (carIndex < carList->size())
+	{
+		temp = carList->at(carIndex).price;
+		if (temp > maxPrice)
+		{
+			maxPrice = temp;
+			maxIndex = carIndex;
+		} 
+		carIndex = carIndex + 1;
+	}
+
+	cout << "Max price in CarList is: " << maxPrice << " at index " << maxIndex << endl;
+}
+
+
 void printCarList(vector<Car>* s) {
 	cout << endl << "Displaying Cars from car list" << endl;
 	for (int k = 0; k < s->size(); k++)
@@ -140,6 +164,5 @@ void printCarList(vector<Car>* s) {
 		//price = atoi(s->at(k + 1).c_str()); //populating prise
 		//name = v->at(s + 2);  //populating brand name
 	}
-
 
 }

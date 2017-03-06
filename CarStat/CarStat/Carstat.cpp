@@ -101,7 +101,10 @@ int main()
 	}
 	cout << endl << "carList size is: " << carList->size() << endl;
 	//compare two Cars from carList
-	carList->at(0) > carList->at(1);
+	//carList->at(0) > carList->at(1);
+	
+	getCarWithMaxPrice(carList); //call func to evaluate max price
+	
 	//call the destructor to free memory
 	carList->clear();
 	//Ok.
