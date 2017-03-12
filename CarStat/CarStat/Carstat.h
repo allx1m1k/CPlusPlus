@@ -16,23 +16,6 @@ using namespace std;
 */
 
 
-//.в с++11 встроен удобный api для работы с файлами - используй его
-//https://www.tutorialspoint.com/cplusplus/cpp_files_streams.htm
-//fstream https://msdn.microsoft.com/en-us/library/k8w40w6t.aspx
-//. вычитка структуры из файла http://ci-plus-plus-snachala.ru/?p=2177
-//.по-сточная вычитка из файла по условию (год выпуска <= заданный год)
-//см. тут http://www.cplusplus.com/forum/beginner/208388/#msg982326
-//.msdn по-строчная вычитка файла
-//https://msdn.microsoft.com/uk-ua/library/94223t4d.aspx
-//.string substr
-//http://www.cplusplus.com/reference/string/string/substr/
-//.sort
-//http://www.cplusplus.com/reference/algorithm/sort/
-//. вычитка в буфер http://www.programmersforum.ru/showthread.php?t=91445
-//запись считанной строки в несортированную динамическую структуру-контейнер
-//см. stl контейнеры http://informatics.mccme.ru/mod/book/view.php?id=492&chapterid=200
-//. сортировка динамических контейнеров http://www.cplusplus.com/articles/NhA0RXSz/ 
-
 
 struct Car
 {
@@ -98,26 +81,12 @@ void Car::operator>(Car rhsCar)
 		cout << rhsCar.price << " is more!";
 }
 
-/* 
-Split a string by a delim, and return a vector of strings 
-containing no delim
-*/
-std::vector<string> mySplitToCharToken(const string &s, char delim) 
-	{
-		stringstream ss(s);
-		string item;
-		vector<string> tokens;
-		while (getline(ss, item, delim)) 
-		{
-			tokens.push_back(item);
-		}
-		return tokens;
-	}
+
 /*
+Split a line by a delim, and return a vector of tokens containing no delim
 string& s - input 
 delim - delimeter
 vector<string>* v - output
-http://ysonggit.github.io/coding/2014/12/16/split-a-string-using-c.html
 */
 void mySplitToStrVector(const string s, char delim, vector<string>* v) {
 	auto i = 0;
@@ -132,15 +101,39 @@ void mySplitToStrVector(const string s, char delim, vector<string>* v) {
 	}
 }
 
-/* Evaluating max price in carList
+/*
+Displaying tokens
+*/
+void printTokens(vector<string>* v)
+{
+	int k = 0;
+	cout << endl << "Displaying tokens from myDelim vector" << endl;
+	while (k < v->size())
+	{
+		cout << v->at(k);
+		//cout <<  aaYear << endl;
+		k++;
+		cout << endl;
+	}
+}
+
+std::vector<Car> addCar(vector<string>* v)
+{
+	std::vector<Car> *carList = new vector<Car>;
+	return *carList;
+}
+
+
+/* 
+Evaluating max price in carList
 */
 void getCarWithMaxPrice(vector<Car> *carList)
 {
+	//local varibles
 	float_t maxPrice = 0;
 	float_t temp = 0;
 	int carIndex = 0;
 	int maxIndex = 0;
-
 	while (carIndex < carList->size())
 	{
 		temp = carList->at(carIndex).price;
@@ -151,7 +144,6 @@ void getCarWithMaxPrice(vector<Car> *carList)
 		} 
 		carIndex = carIndex + 1;
 	}
-
 	cout << "Max price in CarList is: " << maxPrice << " at index " << maxIndex << endl;
 }
 

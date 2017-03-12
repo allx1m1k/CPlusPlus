@@ -9,19 +9,15 @@
 #include <stdlib.h> 
 #include "Carstat.h"
 using namespace std;
-//
-fstream fileIn; //input file
-std::string aStr; //a file line which has car data
-std::vector<std::string> aCars = {""}; //a array of car data
-std::string aYear = "";
-//std::vector<Car> aStructCars; //a array of car data via Car struct
-//std::vector<string> aCars;
-int i = 0;
-int askYear = 0;
+//static virables 
 
 int main() 
 {
-	
+	//local virables
+	fstream fileIn; //input file
+	std::string aStr; //a file line which has car data
+	std::string aYear = "";  //input from file
+	int askYear = 0; //user input will be compared with input from file
 	std::vector<string> *myDelim = new std::vector<string>; //alocate mem in heap
 	try
 	{
@@ -36,12 +32,10 @@ int main()
 			cout << "car.txt found" << endl;
 			cout << "Enter year: ";
 			cin  >> askYear;
-			//std::vector<string> myDelim = {};		
 			while (getline(fileIn, aStr)) //read a line from file
 			{
-				 //mySplitToCharToken(aStr, ';');
 				aYear = aStr.substr(0, 4); //extract year from file line
-				if (std::stoi(aYear) >= askYear) //add only line which is fulfill	
+				if (std::stoi(aYear) >= askYear) //add only line which is matches the criteria	
 					mySplitToStrVector(aStr, ';', myDelim); //parse a line to vector
 			}
 		}
@@ -51,22 +45,12 @@ int main()
 		cerr << e.what() << endl;
 		return -1;
 	}
-	/*
-	Displaying tokens
-	*/
-	int k = 0;
-	cout << endl << "Displaying tokens from myDelim vector" << endl;
-	while (k < myDelim->size())
-	{
-		//std::string aaYear = aCars[k].substr(0, 4);
-		cout << myDelim->at(k);
-		//cout <<  aaYear << endl;
-		k++;
-		cout << endl;
-	}
+
+	printTokens(myDelim); //displaying the token elements from vector
+	cout << endl << myDelim->size() << " tokens found" << endl;
+
 	//populating the vector of Cars 
 	std::vector<Car> *carList = new vector<Car>;
-	cout << endl << myDelim->size() << " tokens found" << endl;
 	bool flag = true; //if flag is set then create the Car instance
 	int indexYear = 0; //index of year
 	int indexPrice = 1; //index of price
