@@ -50,7 +50,12 @@ int main()
 	cout << endl << myDelim->size() << " tokens found" << endl;
 
 	//populating the vector of Cars 
+	std::vector<Car> *carListFunc =  createCarList(myDelim);
 	std::vector<Car> *carList = new vector<Car>;
+
+/*  
+The below routine has transfered to the createCarList(<string>* v)
+	
 	bool flag = true; //if flag is set then create the Car instance
 	int indexYear = 0; //index of year
 	int indexPrice = 1; //index of price
@@ -83,13 +88,17 @@ int main()
 			else break;
 		}
 	}
+*/
+	cout << endl << "carListFunc size is: " << carListFunc->size() << endl;
 	cout << endl << "carList size is: " << carList->size() << endl;
 	//compare two Cars from carList
 	//carList->at(0) > carList->at(1);
 	
+	getCarWithMaxPrice(carListFunc); //call func to evaluate max price
 	getCarWithMaxPrice(carList); //call func to evaluate max price
 	
 	//call the destructor to free memory
+	carListFunc->clear();
 	carList->clear();
 	//Ok.
 	return 0;

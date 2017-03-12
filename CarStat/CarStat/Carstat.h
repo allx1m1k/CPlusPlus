@@ -117,10 +117,43 @@ void printTokens(vector<string>* v)
 	}
 }
 
-std::vector<Car> addCar(vector<string>* v)
+std::vector<Car>* createCarList(vector<string>* v)
 {
-	std::vector<Car> *carList = new vector<Car>;
-	return *carList;
+	std::vector<Car> *aList = new vector<Car>; //allocate memory
+
+	bool flag = true; //if flag is set then create the Car instance
+	int indexYear = 0; //index of year
+	int indexPrice = 1; //index of price
+	int indexName = 2; //index of name 
+					   //adding Car instance to the vector
+	if (v->size() > 0) {
+		for (indexYear; indexYear <= v->size() - 3; indexYear = indexYear + 3) //looping by year 
+		{
+			flag = true;
+			if (flag) {
+				for (indexPrice; indexPrice <= v->size() - 2; indexPrice = indexPrice + 3) //looping by price 
+				{
+					if (flag) {
+						for (indexName; indexName <= v->size() - 1; indexName = indexName + 3) //looping by name
+						{
+							if (flag) {
+								int inYear = atoi(v->at(indexYear).c_str()); //populating year
+								float_t inPrice = atoi(v->at(indexPrice).c_str()); //populating prise
+								std::string inName = v->at(indexName);  //populating brand name					
+								aList->push_back(Car(inYear, inPrice, inName)); //passing values to Car constructor	
+							}
+							else break;
+							flag = false;
+						}
+					}
+					else break;
+					flag = false;
+				}
+			}
+			else break;
+		}
+	}
+	return aList;
 }
 
 
