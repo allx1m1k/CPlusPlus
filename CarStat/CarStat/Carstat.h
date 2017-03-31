@@ -1,11 +1,12 @@
 #pragma once
-
 #include <vector>
 #include <string>
 #include <initializer_list>
 #include <iostream>
 #include <sstream>
-
+#include <iostream>
+#include <stdlib.h> 
+using namespace std;
 
 /*
 Имеется файл, в каждой строке которого хранится запись о проданном авто.
@@ -14,52 +15,32 @@
 */
 
 
-//.в с++11 встроен удобный api для работы с файлами - используй его
-//https://www.tutorialspoint.com/cplusplus/cpp_files_streams.htm
-//fstream https://msdn.microsoft.com/en-us/library/k8w40w6t.aspx
-//. вычитка структуры из файла http://ci-plus-plus-snachala.ru/?p=2177
-//.по-сточная вычитка из файла по условию (год выпуска <= заданный год)
-//см. тут http://www.cplusplus.com/forum/beginner/208388/#msg982326
-//.msdn по-строчная вычитка файла
-//https://msdn.microsoft.com/uk-ua/library/94223t4d.aspx
-//.string substr
-//http://www.cplusplus.com/reference/string/string/substr/
-//.sort
-//http://www.cplusplus.com/reference/algorithm/sort/
-//. вычитка в буфер http://www.programmersforum.ru/showthread.php?t=91445
-//запись считанной строки в несортированную динамическую структуру-контейнер
-//см. stl контейнеры http://informatics.mccme.ru/mod/book/view.php?id=492&chapterid=200
-//. сортировка динамических контейнеров http://www.cplusplus.com/articles/NhA0RXSz/ 
-
-
 struct Car
 {
+	
 	int year; //год выпуска
 	float_t price; //цена
 	std::string name; //бренд
 
+	//destructor
 	~Car() {}
 	
-	//конструктор без параметров
-	Car(): 
-		year(0),
-		price(0.00),
-		name("")
-	{}
+	//default constructor
+	Car();
+	//constructor with params
+	Car(int inYear, float_t inPrize, string inName);
 	
-	//конструктор из строки, считанной из файла
-	//http://stackoverflow.com/questions/27098305/parsing-string-into-struct-variables
-	//http://www.cplusplus.com/reference/sstream/istringstream/
-	Car(std::string &str)
-	{
-		//parse year
-		std::string *strYear = new std::string; //allocate mem for year in str
-		std::size_t loc = str.find(';'); //delimiter
-		*strYear = str.substr(0, loc);  //assign new value of year
-		year = atoi(strYear->c_str()); //from str to int year
-		//parse price and name
-		std::istringstream iss(str.substr(loc));
-		//iss >> price >> name;
-	}
+	//overload comaparing operator more than...
+	//void operator>(Car rhsCar);
 
+	//implementation of overload comparing operator inside Car struct
+	/*void Car::operator>(Car rhsCar)
+	{
+		if (this.price > rhsCar.price)
+			cout << "Price: " << this.price << " more than " << rhsCar.price;
+		else
+			cout << rhsCar.price << " is more!";
+	}
+	*/
 };
+
