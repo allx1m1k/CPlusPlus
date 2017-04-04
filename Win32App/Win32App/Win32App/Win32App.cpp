@@ -88,7 +88,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			{
 				// Обработка команд (нажатие кнопок, мыши, полей ввода и т.д.)
 			}
-
 			break;
 		}
 
@@ -99,7 +98,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			return 0;
 			break;
 		}
-	}
 
+		case WM_KEYUP:
+		{
+			switch (wParam)
+			{
+				case VK_ESCAPE:
+				{
+					PostQuitMessage(0);
+				}
+				break;
+			}	
+			break;
+		} 
+		break;
+		default:
+		return DefWindowProc(hwnd, uMsg, wParam, lParam);
+	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
