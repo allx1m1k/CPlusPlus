@@ -39,9 +39,10 @@ int WINAPI WinMain(
 		MessageBox(NULL, L"Класс окна не был создан!", L"Ошибка", MB_ICONERROR);
 	}
 
-	// Создаем окно при помощи функции WinApi CreateWindowEx
+	// Создаем окно при помощи функции WinApi CreateWindowEx, получаем handle к окну
 	HWND hWindow = CreateWindowEx(NULL,
-		L"MainWindowClass", // Имя класса, который мы определили ранее
+		//L"MainWindowClass", 
+		wClass.lpszClassName, // Имя класса, который мы определили ранее		
 		L"Мое первое окно с WinApi", // Заголовок окна
 		WS_OVERLAPPEDWINDOW,
 		300, // x координата по горизонтали
