@@ -5,10 +5,14 @@
 #include <windows.h>
 
 // Объявляем прототип CALLBACK функции
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK MainWindowClassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 // Функция WinAPI для точки входа в программу
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+int WINAPI WinMain(
+	HINSTANCE hInstance,		//handle к текущему экземпляру приложения
+	HINSTANCE hPrevInstance,	//handle к предыдущему экземпляру приложения
+	LPSTR lpCmdLine,			//адрес командной строки
+	int nShowCmd)				//тип окна
 {
 	// Регистрация класса окна
 	// Объявляем переменную типа WNDCLASSEX
@@ -16,15 +20,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	WNDCLASSEX wClass;
 	ZeroMemory(&wClass, sizeof(WNDCLASSEX)); // Обнуляем память
 
-											 // Заполняем структуру WNDCLASSEX
+	// Заполняем структуру WNDCLASSEX
+	wClass.style = CS_HREDRAW | CS_VREDRAW; //Стиль окна
+	wClass.lpfnWndProc = (WNDPROC)MainWindowClassProc; // Процедура обработки окна
+	wClass.hInstance = hInstance; // hInstance window
 	wClass.cbSize = sizeof(WNDCLASSEX); // Размер равен размеру структуры
 	wClass.hbrBackground = (HBRUSH)COLOR_WINDOW; // Определяем фон окна
-	wClass.hInstance = hInstance; // hInstance window
-	wClass.lpfnWndProc = (WNDPROC)WndProc; // Процедура обработки окна
-	wClass.lpszClassName = L"My Window Class"; // Имя класса
+	wClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);	
+	wClass.lpszMenuName = L"MainMenu"; //Имя меню
+	wClass.lpszClassName = L"MainWindowClass"; // Имя класса
 
 
-											  // Если произошла ошибка, то выводим сообщение
+	// Если произошла ошибка, то выводим сообщение
 	if (!RegisterClassEx(&wClass))
 	{
 		int nResult = GetLastError();
@@ -33,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// Создаем окно при помощи функции WinApi CreateWindowEx
 	HWND hWindow = CreateWindowEx(NULL,
-		L"My Window Class", // Имя класса, который мы определили ранее
+		L"MainWindowClass", // Имя класса, который мы определили ранее
 		L"Мое первое окно с WinApi", // Заголовок окна
 		WS_OVERLAPPEDWINDOW,
 		300, // x координата по горизонтали
@@ -72,10 +80,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 // определяем процедуру обратного вызова (WinApi)
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MainWindowClassProc(
+	HWND hwnd,     // handle окна
+	UINT uMsg,     // идентификатор сообщения
+	WPARAM wParam, // параметр первого сообщения
+	LPARAM lParam) // параметр второго сообщения
 {
 	switch (uMsg)
 	{
+		case WM_PAINT:
+		{
+			// Здесь будем создавать элементы заполнения окна, к прим. пользовательскую область
+			break;
+		}
+
 		case WM_CREATE:
 		{
 			// Здесь будем создавать элементы управления окна
@@ -111,9 +129,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}	
 			break;
 		} 
-		break;
+		//break;
 		default:
-		return DefWindowProc(hwnd, uMsg, wParam, lParam);
+			return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
