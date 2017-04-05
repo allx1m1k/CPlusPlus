@@ -79,16 +79,32 @@ int WINAPI WinMain(
 	}
 
 	// Добавляем опции меню
+	AppendMenu(
+		hMenuBar,
+		MFT_STRING | MF_POPUP,
+		100, //сообщение при клике
+		L"MenuBar100");
+
+	// Добавляем опции меню
+	AppendMenu(
+		hMenuBar,
+		MFT_STRING | MF_POPUP,
+		101, //сообщение при клике
+		L"MenuBar101");
+
+	/*
 	InsertMenuItem(
 		hMenuBar,	// handle меню
 		1,			// начальная позиция меню
 		TRUE,		// интерпритировать опции меню как позиции а не наименования
 		NULL);		// ссылка MENUITEMINFO
+	*/
 
-	// Показываем окно и рисуем меню
-	SetMenu(hWindow, hMenuBar);	
+	// Показываем окно и рисуем вместе с меню
+	SetMenu(hWindow, hMenuBar);
+	DrawMenuBar(hWindow);	
 	ShowWindow(hWindow, nShowCmd);
-	DrawMenuBar(hWindow);
+	
 	
 					
 	// Цикл обработки сообщений
@@ -135,6 +151,16 @@ LRESULT CALLBACK MainWindowClassProc(
 			switch (LOWORD(wParam))
 			{
 				// Обработка команд (нажатие кнопок, мыши, полей ввода и т.д.)
+			case 100:
+				{
+					MessageBox(hwnd, L"100", L"100", MB_ICONERROR);
+					break;
+				}
+			case 101:
+			{
+				MessageBox(hwnd, L"101", L"101", MB_ICONERROR);
+				break;
+			}
 			}
 			break;
 		}
