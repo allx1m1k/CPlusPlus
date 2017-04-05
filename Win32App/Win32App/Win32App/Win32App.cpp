@@ -27,8 +27,7 @@ int WINAPI WinMain(
 	wClass.cbSize = sizeof(WNDCLASSEX); // Размер равен размеру структуры
 	wClass.hbrBackground = (HBRUSH)COLOR_WINDOW; // Определяем фон окна
 	wClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);	
-	wClass.lpszMenuName = L"MainMenu"; //Имя меню
+	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wClass.lpszClassName = L"MainWindowClass"; // Имя класса
 
 
@@ -42,7 +41,7 @@ int WINAPI WinMain(
 	// Создаем окно при помощи функции WinApi CreateWindowEx, получаем handle к окну
 	HWND hWindow = CreateWindowEx(NULL,
 		//L"MainWindowClass", 
-		wClass.lpszClassName, // Имя класса, который мы определили ранее		
+		wClass.lpszClassName, // Имя класса, который мы определили ранее при регистрации окна
 		L"Мое первое окно с WinApi", // Заголовок окна
 		WS_OVERLAPPEDWINDOW,
 		300, // x координата по горизонтали
@@ -61,14 +60,37 @@ int WINAPI WinMain(
 		MessageBox(NULL, L"Окно не было создано!", L"Ошибка", MB_ICONERROR);
 	}
 
-	// Показываем окно
-	ShowWindow(hWindow, nShowCmd);
+	//тут был вызов показа окна
 
 	// Объявляем переменную для сообщений типа MSG
 	MSG msg;
 	// Обнуляем память по размеру структуры MSG
 	ZeroMemory(&msg, sizeof(MSG));
 
+	// создаем меню бар
+	HMENU hMenuBar = CreateMenu();
+	//HMENU hMenuBar = GetMenu(hWindow);
+	
+	// Если меню не было создано, то выдаем сообщение
+	if (!hMenuBar)
+	{
+		int nResult = GetLastError();
+		MessageBox(NULL, L"Меню не было создано!", L"Ошибка создания меню", MB_ICONERROR);
+	}
+
+	// Добавляем опции меню
+	InsertMenuItem(
+		hMenuBar,	// handle меню
+		1,			// начальная позиция меню
+		TRUE,		// интерпритировать опции меню как позиции а не наименования
+		NULL);		// ссылка MENUITEMINFO
+
+	// Показываем окно и рисуем меню
+	SetMenu(hWindow, hMenuBar);	
+	ShowWindow(hWindow, nShowCmd);
+	DrawMenuBar(hWindow);
+	
+					
 	// Цикл обработки сообщений
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
@@ -100,6 +122,13 @@ LRESULT CALLBACK MainWindowClassProc(
 			// Здесь будем создавать элементы управления окна
 			break;
 		}
+
+		case WM_PARENTNOTIFY:
+		{
+			// Здесь будем создавать элементы управления дочернего окна
+			break;
+		}
+
 
 		case WM_COMMAND:
 		{
