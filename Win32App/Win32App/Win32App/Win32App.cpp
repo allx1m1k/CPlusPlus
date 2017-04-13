@@ -1,3 +1,4 @@
+//Sync with note
 // Создаем окно при помощи шаблона
 // Visual Studio C++ WinApi
 
