@@ -5,6 +5,12 @@
 // Подключаем библиотеки Windows для Win32
 #include <windows.h>
 #include <winuser.h>
+#include <tchar.h>
+
+// 
+PAINTSTRUCT ps;
+HDC hdc;
+TCHAR greeting[] = L"Студент ПАМ-152. Пельтик Д.В.";
 
 // Объявляем прототип CALLBACK функции
 LRESULT CALLBACK MainWindowClassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -118,8 +124,7 @@ int WINAPI WinMain(
 	DrawMenuBar(hWindow);	
 	ShowWindow(hWindow, nShowCmd);
 	
-	
-					
+				
 	// Цикл обработки сообщений
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
@@ -127,7 +132,7 @@ int WINAPI WinMain(
 		DispatchMessage(&msg);
 	}
 
-	return 0;
+	return msg.wParam;
 }
 
 // определяем процедуру обратного вызова (WinApi)
@@ -138,11 +143,20 @@ LRESULT CALLBACK MainWindowClassProc(
 	WPARAM wParam, // параметр первого сообщения
 	LPARAM lParam) // параметр второго сообщения
 {
+	
 	switch (uMsg)
 	{
 		case WM_PAINT:
 		{
 			// Здесь будем создавать элементы заполнения окна, к прим. пользовательскую область
+			hdc = BeginPaint(hwnd, &ps);
+
+			// Here your application is laid out.  
+			// For this introduction we print in greeting the top left corner.  
+			TextOut(hdc, 5, 5, greeting, _tcslen(greeting));
+			// End application-specific layout section.  
+
+			EndPaint(hwnd, &ps);
 			break;
 		}
 
