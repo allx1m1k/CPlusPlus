@@ -4,6 +4,7 @@
 
 // Подключаем библиотеки Windows для Win32
 #include <windows.h>
+#include <winuser.h>
 
 // Объявляем прототип CALLBACK функции
 LRESULT CALLBACK MainWindowClassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -84,14 +85,25 @@ int WINAPI WinMain(
 		hMenuBar,
 		MFT_STRING | MF_POPUP,
 		100, //сообщение при клике
-		L"MenuBar100");
+		L"Таймер");
 
-	// Добавляем опции меню
 	AppendMenu(
 		hMenuBar,
 		MFT_STRING | MF_POPUP,
 		101, //сообщение при клике
-		L"MenuBar101");
+		L"Графики");
+
+	AppendMenu(
+		hMenuBar,
+		MFT_STRING | MF_POPUP,
+		102, //сообщение при клике
+		L"Автор");
+
+	AppendMenu(
+		hMenuBar,
+		MFT_STRING | MF_POPUP,
+		103, //сообщение при клике
+		L"Реестр");
 
 	/*
 	InsertMenuItem(
@@ -154,14 +166,26 @@ LRESULT CALLBACK MainWindowClassProc(
 				// Обработка команд (нажатие кнопок, мыши, полей ввода и т.д.)
 			case 100:
 				{
-					MessageBox(hwnd, L"100", L"100", MB_ICONERROR);
+					MessageBox(hwnd, L"Таймер", L"100", MB_ICONINFORMATION);
 					break;
 				}
 			case 101:
+				{
+					MessageBox(hwnd, L"Графики", L"101", MB_ICONERROR);
+					break;
+				}
+			case 102:
+				{
+					MessageBox(hwnd, L"Автор", L"102", MB_ICONERROR);
+					break;
+				}
+			case 103:
 			{
-				MessageBox(hwnd, L"101", L"101", MB_ICONERROR);
+				MessageBox(hwnd, L"Реестр", L"103", MB_ICONERROR);
 				break;
 			}
+
+
 			}
 			break;
 		}
