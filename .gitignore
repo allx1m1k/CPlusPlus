@@ -28,6 +28,7 @@
 *.user
 *.aps
 *.res
+/Win32App/Win32TestPath/Win32TestPath/Win32TestPath.aps
 /CarStat/Debug/car.~xt
 /CarStat/Debug/wwwcar.txt
 /CarStat/Debug/ddcar.txt
