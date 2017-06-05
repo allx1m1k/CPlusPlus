@@ -10,6 +10,7 @@ using namespace Gdiplus;
 
 
 #define MAX_LOADSTRING 100
+#define TIMER_SECOND 1		// first timer identified by integer 1
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
@@ -21,6 +22,7 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+VOID CALLBACK MyTimerProc(HWND, UINT, UINT_PTR, DWORD);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -39,7 +41,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
-
+	
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_WIN32TESTPATH, szWindowClass, MAX_LOADSTRING);
@@ -109,7 +111,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
-
+   
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
@@ -138,24 +140,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_COMMAND:
+	case WM_CREATE: 
+		{
+			// Upon window creation, we want to initialize the timer:
+			//SetTimer(hWnd, TIMER_SECOND, 1000, (TIMERPROC)MyTimerProc);
+		}
+		break;
+
+	case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
             // Parse the menu selections:
             switch (wmId)
             {
-            case IDM_ABOUT:
+			case IDM_START:
+				
+				break;
+			
+			case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
-                DestroyWindow(hWnd);
+				KillTimer(hWnd, TIMER_SECOND);
+				DestroyWindow(hWnd);
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
         break;
-    case WM_PAINT:
+    
+	case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
@@ -173,8 +188,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
+   
+	case WM_DESTROY:
+		PostQuitMessage(0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
@@ -199,5 +215,29 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     }
+
+	
     return (INT_PTR)FALSE;
+}
+
+VOID CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR idTimer, DWORD dwTime)
+{
+	//MessageBeep(1);
+	static BOOL fFlipFlop = FALSE;
+	HBRUSH      hBrush;
+	HDC         hdc;
+	RECT        rc;
+
+	//MessageBeep(-1);
+	fFlipFlop = !fFlipFlop;
+
+	GetClientRect(hWnd, &rc);
+
+	hdc = GetDC(hWnd);
+	hBrush = CreateSolidBrush(fFlipFlop ? RGB(255, 0, 0) : RGB(0, 0, 255));
+
+	FillRect(hdc, &rc, hBrush);
+	ReleaseDC(hWnd, hdc);
+	DeleteObject(hBrush);
+
 }
