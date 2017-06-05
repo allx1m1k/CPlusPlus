@@ -24,6 +24,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    StartTimer(HWND, UINT, WPARAM, LPARAM); //callback for start timer dialog
+INT_PTR CALLBACK    Reestr(HWND, UINT, WPARAM, LPARAM); //callback for reestr dialog
 VOID CALLBACK MyTimerProc(HWND, UINT, UINT_PTR, DWORD);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -164,7 +165,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
-            case IDM_EXIT:
+            
+			case IDM_FREE:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG2), hWnd, Reestr);
+				break;
+
+			case IDM_EXIT:
 				KillTimer(hWnd, TIMER_SECOND);
 				DestroyWindow(hWnd);
                 break;
@@ -244,6 +250,26 @@ INT_PTR CALLBACK StartTimer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 	return (INT_PTR)FALSE;
 }
 
+// Message handler for start timer box.
+INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+
+	return (INT_PTR)FALSE;
+}
 
 
 VOID CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR idTimer, DWORD dwTime)
