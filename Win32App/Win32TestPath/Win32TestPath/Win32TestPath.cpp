@@ -5,7 +5,7 @@
 #include "Win32TestPath.h"
 #include <objidl.h>
 #include <gdiplus.h>
-#include <Winuser.h>
+#include <WinUser.h>
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
@@ -253,6 +253,27 @@ INT_PTR CALLBACK StartTimer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 // Message handler for start timer box.
 INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	TCHAR       szBuffer[10];
+	
+	//disk data
+	unsigned long lSectInClust, lByteInSect, lNumFreeClust, lNumClust, lTotal, lBuf, lBuf1;
+	char szCurrent[MAX_PATH];
+	//GetCurrentDirectory(MAX_PATH, szCurrent);
+		
+	//graphics context
+	//PAINTSTRUCT ps; //создаём экземпляр структуры графического вывода
+	HDC hDc = GetDC(hDlg); //создаём контекст устройства
+	char* myText = "My text";
+
+	//fetch disk data
+	GetDiskFreeSpace(NULL, &lSectInClust, &lByteInSect, &lNumFreeClust, &lTotal);
+	lBuf = lSectInClust;
+	lBuf *= lByteInSect;
+	lBuf *= lNumFreeClust;
+	TextOut(hDc, 10, 10, myText, 1000);
+	
+	//sLen = sprintf(szMessage, "На диске свободно: %ld Мб", lBuf / 1000000);
+	
 	UNREFERENCED_PARAMETER(lParam);
 	switch (message)
 	{
