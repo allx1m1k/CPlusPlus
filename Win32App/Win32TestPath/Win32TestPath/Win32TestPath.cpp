@@ -5,6 +5,7 @@
 #include "Win32TestPath.h"
 #include <objidl.h>
 #include <gdiplus.h>
+#include <Winuser.h>
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
@@ -22,6 +23,7 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    StartTimer(HWND, UINT, WPARAM, LPARAM); //callback for start timer dialog
 VOID CALLBACK MyTimerProc(HWND, UINT, UINT_PTR, DWORD);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -142,7 +144,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE: 
 		{
-			// Upon window creation, we want to initialize the timer:
+			
 			//SetTimer(hWnd, TIMER_SECOND, 1000, (TIMERPROC)MyTimerProc);
 		}
 		break;
@@ -153,8 +155,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Parse the menu selections:
             switch (wmId)
             {
-			case IDM_START:
-				
+			case IDM_STARTTIMER:
+				// Upon menu selection, we want to initialize the timer:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, StartTimer);
+				SetTimer(hWnd, TIMER_SECOND, 1000, (TIMERPROC)MyTimerProc);
 				break;
 			
 			case IDM_ABOUT:
@@ -215,10 +219,32 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     }
-
 	
     return (INT_PTR)FALSE;
 }
+
+// Message handler for start timer box.
+INT_PTR CALLBACK StartTimer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+
+	return (INT_PTR)FALSE;
+}
+
+
 
 VOID CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR idTimer, DWORD dwTime)
 {
