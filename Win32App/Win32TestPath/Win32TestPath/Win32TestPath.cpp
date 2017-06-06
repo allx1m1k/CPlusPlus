@@ -6,6 +6,7 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include <WinUser.h>
+#include <Lmcons.h>
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
@@ -263,17 +264,27 @@ INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	//graphics context
 	//PAINTSTRUCT ps; //создаём экземпляр структуры графического вывода
 	HDC hDc = GetDC(hDlg); //создаём контекст устройства
-	char* myText = "My text";
+	LPCWSTR myStr1 = L"Текущий пользователь:";
+	
+	
+	//get current user
+	TCHAR username[UNLEN + 1];
+	DWORD size = UNLEN + 1;
+	GetUserNameW((TCHAR*)username, &size);
 
-	//fetch disk data
+	//posting to the dialog
+	TextOutW(hDc, 10, 10, myStr1, (DWORD)wcslen(myStr1));
+	TextOutW(hDc, 10, 50, username, (DWORD)wcslen(username));
+
+		/* 
+	fetch disk data
 	GetDiskFreeSpace(NULL, &lSectInClust, &lByteInSect, &lNumFreeClust, &lTotal);
 	lBuf = lSectInClust;
 	lBuf *= lByteInSect;
-	lBuf *= lNumFreeClust;
-	TextOut(hDc, 10, 10, myText, 1000);
-	
-	//sLen = sprintf(szMessage, "На диске свободно: %ld Мб", lBuf / 1000000);
-	
+	lBuf *= lNumFreeClust;	
+	sLen = sprintf(szMessage, "На диске свободно: %ld Мб", lBuf / 1000000);
+	*/
+		
 	UNREFERENCED_PARAMETER(lParam);
 	switch (message)
 	{
