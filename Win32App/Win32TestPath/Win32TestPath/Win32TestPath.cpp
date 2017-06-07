@@ -275,6 +275,7 @@ INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	//posting to the dialog
 	TextOutW(hDc, 10, 10, myStr1, (DWORD)wcslen(myStr1));
 	TextOutW(hDc, 10, 50, username, (DWORD)wcslen(username));
+	ReleaseDC(hDlg, hDc); // release graphics context
 
 		/* 
 	fetch disk data
