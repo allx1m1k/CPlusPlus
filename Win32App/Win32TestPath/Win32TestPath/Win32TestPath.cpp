@@ -26,6 +26,7 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    StartTimer(HWND, UINT, WPARAM, LPARAM); //callback for start timer dialog
 INT_PTR CALLBACK    Reestr(HWND, UINT, WPARAM, LPARAM); //callback for reestr dialog
+INT_PTR CALLBACK    Graphic(HWND, UINT, WPARAM, LPARAM); //callback for graphic dialog
 VOID CALLBACK MyTimerProc(HWND, UINT, UINT_PTR, DWORD);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -44,8 +45,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: Place code here.
-	
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_WIN32TESTPATH, szWindowClass, MAX_LOADSTRING);
@@ -74,13 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
-
-//
 //  FUNCTION: MyRegisterClass()
-//
 //  PURPOSE: Registers the window class.
-//
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW wcex;
@@ -102,16 +96,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     return RegisterClassExW(&wcex);
 }
 
-//
+
 //   FUNCTION: InitInstance(HINSTANCE, int)
-//
 //   PURPOSE: Saves instance handle and creates main window
-//
 //   COMMENTS:
-//
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
-//
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
@@ -130,16 +120,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-//
+
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
 //  PURPOSE:  Processes messages for the main window.
-//
 //  WM_COMMAND  - process the application menu
 //  WM_PAINT    - Paint the main window
 //  WM_DESTROY  - post a quit message and return
-//
-//
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -160,9 +146,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case IDM_STARTTIMER:
 				// Upon menu selection, we want to initialize the timer:
 				DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, StartTimer);
+				//link timer to the window
 				SetTimer(hWnd, TIMER_SECOND, 1000, (TIMERPROC)MyTimerProc);
 				break;
 			
+			case IDM_STARTGRAPHIC:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_GRAPHIC), hWnd, Graphic);
+				break;
+
 			case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
@@ -175,31 +166,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				KillTimer(hWnd, TIMER_SECOND);
 				DestroyWindow(hWnd);
                 break;
+			
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
         break;
-    
-	case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-			
-				// ::Rectangle(hdc, 10, 12, 600, 350 );
-			Graphics graphics(hdc);
-			Pen      pen(Color(255, 0, 0, 255));
-			graphics.DrawLine(&pen, 0, 0, 200, 100);
-
-
-			Image image(L"C:\\Users\\DPeltik\\Pictures\\p1.jpg");
-			graphics.DrawImage(&image, 60, 10);
-
-            EndPaint(hWnd, &ps);
-        }
-        break;
-   
+	
 	case WM_DESTROY:
 		PostQuitMessage(0);
         break;
@@ -247,11 +220,10 @@ INT_PTR CALLBACK StartTimer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 		}
 		break;
 	}
-
 	return (INT_PTR)FALSE;
 }
 
-// Message handler for start timer box.
+// Message handler for fetch data from reestr box.
 INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	TCHAR       szBuffer[10];
@@ -262,10 +234,8 @@ INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	//GetCurrentDirectory(MAX_PATH, szCurrent);
 		
 	//graphics context
-	//PAINTSTRUCT ps; //создаём экземпляр структуры графического вывода
-	HDC hDc = GetDC(hDlg); //создаём контекст устройства
+	HDC hDc = GetDC(hDlg); 
 	LPCWSTR myStr1 = L"Текущий пользователь:";
-	
 	
 	//get current user
 	TCHAR username[UNLEN + 1];
@@ -305,6 +275,48 @@ INT_PTR CALLBACK Reestr(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
+// Message handler for graphic drawing in dialog box.
+INT_PTR CALLBACK Graphic(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		//get graphic context
+		HDC hdc = BeginPaint(hDlg, &ps);
+		
+		// Add any drawing code that uses hdc here...		
+		Graphics graphics(hdc);
+		Pen      pen(Color(255, 0, 0, 255));
+		graphics.DrawLine(&pen, 0, 0, 200, 100);
+
+
+		Image image(L"C:\\Users\\DPeltik\\Pictures\\p1.jpg");
+		graphics.DrawImage(&image, 60, 10);
+
+		EndPaint(hDlg, &ps);
+	}
+	break;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+
+	return (INT_PTR)FALSE;
+}
+
+
+// Message handler for start timer box.
 VOID CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR idTimer, DWORD dwTime)
 {
 	//MessageBeep(1);
